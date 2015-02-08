@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Timetable Scheduler</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+
+  <script>
+  //datepicker
+  $(function() {
+    $( "#datepicker" ).datepicker({minDate: 0});
+  });
+  </script>
+
+ <script>
+  $(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 1,
+      max: 15,
+      values: [ 1, 15 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+  </script>
+
+  <script>
+  	function numbersonly(myfield, e, dec)
+   {
+	var key;
+	var keychar;
+
+	if (window.event)
+	   key = window.event.keyCode;
+	else if (e)
+	   key = e.which;
+	else
+	   return true;
+	keychar = String.fromCharCode(key);
+
+	// control keys
+	if ((key==null) || (key==0) || (key==8) ||
+	    (key==9) || (key==13) || (key==27) )
+	   return true;
+
+	// numbers
+	else if ((("0123456789").indexOf(keychar) > -1))
+	   return true;
+
+	// decimal point jump
+	else if (dec && (keychar == "."))
+	   {
+	   myfield.form.elements[dec].focus();
+	   return false;
+	   }
+	else
+	   return false;
+   }
+  </script>
+
+  <script>
+  	var numbersOnly = /^\d+$/;
+
+	 function testInputData(myfield, restrictionType) {
+
+	  var myData = document.getElementById(myfield).value;
+	  if(myData!==''){
+	   if(restrictionType.test(myData)){
+		;
+	   }else{
+		alert('Invalid input data');
+	   }
+	  }else{
+	   alert('Please enter a number!');
+	  }
+	  return;
+
+	 }
+  </script>
+
+<style type="text/css">
+
+	.results {
+		box-shadow: 0 0 10px #000;
+		border-radius: 15px;
+		background-color: #fff;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		padding: 15px;
+		z-index: 999;
+	}
+	.results TABLE {
+		border-collapse: collapse;
+	}
+	.results TH,
+	.results TD {
+		border: 1px solid #ccc;
+		padding: 4px;
+	}
+	.results BUTTON {
+		margin-top: 10px;
+	}
+
+</style>
+
+	<script type="text/javascript">
+
+		function validateForm(form)
+		{
+			if (!/^CO[A-D]\d{3}$/.test(form.modcode.value)) {
+				alert('Module Code is invalid!');
+				return false;
+			}
+
+			var
+				base = document.createElement('div'),
+				table = base.appendChild(document.createElement('table')).appendChild(document.createElement('tbody')),
+				tr, e, fields = {
+
+					'Booking Type'          : 'type',
+					'Date'                  : 'date',
+					'Start & End Week'      : 'amount',
+					'Start Time & End Time' : 'time',
+					'Group Size'            : 'grpsize',
+					'Module Code'           : 'modcode',
+					'Building'              : 'building',
+					'High Priority'         : 'priority',
+					'Disability Access'     : 'disability',
+					'Projector'             : 'projector'
+
+				}, i;
+
+			for (i in fields) {
+				if (fields.hasOwnProperty(i)) {
+					tr = table.appendChild(document.createElement('tr'));
+					tr.appendChild(document.createElement('th')).innerHTML = i;
+					tr.appendChild(document.createElement('td')).innerHTML = form[fields[i]].type === 'checkbox' ? (form[fields[i]].checked ? 'Yes' : 'No') : form[fields[i]].value;
+				}
+			}
+
+			base.className = 'results';
+
+			e = base.appendChild(document.createElement('button'));
+			e.innerHTML = 'Close';
+			e.onclick = function() {base.parentNode.removeChild(base);};
+
+			document.getElementsByTagName('body')[0].appendChild(base);
+			base.style.marginLeft = -((base.offsetWidth / 2) | 0) + 'px';
+			base.style.marginTop = -((base.offsetHeight / 2) | 0) + 'px';
+
+			return false;
+		}
+		function switchBuildings(e)
+		{
+			var
+				building = e.form.building,
+				value    = e.options[e.selectedIndex].value,
+				data, option;
+
+			while (building.options.length) {building.options[0].parentNode.removeChild(building.options[0]);}
+
+			option = document.createElement('option');
+			option.value = 'any';
+			option.innerHTML = 'Any';
+			building.appendChild(option);
+
+			data = ({
+
+				central : {
+					B : 'Brockington',
+					U : 'Brockington Extension',
+					J : 'Edward Herbert',
+					G : 'G Block',
+					N : 'Haslegrave',
+				   CC : 'James France',
+					A : 'Schofield',
+				  SMB : 'Stewart Mason',
+				   GG : 'Wavy Top'
+				},
+				east    : {
+				   JJ : 'Ann Packer',
+				  LDS : 'Design School',
+				   HE : 'Health, Exercise and Biosciences',
+				   YY : 'John Cooper',
+				LUSAD : 'LUSAD',
+			   	   ZZ : 'Matthew Arnold',
+				   JB : 'Sir John Beckwith'
+				},
+				west    : {
+				   RT : 'Civil and Building',
+					S : 'IPTME',
+				   HH : 'John Pickworth',
+				   KG : 'Keith Green Building',
+					T : 'Mechanical Engineering',
+					W : 'Sir David Davies'
+				}
+
+			})[value] || {};
+
+			for (i in data) {if (data.hasOwnProperty(i)) {
+				option = document.createElement('option');
+				option.value = i;
+				option.innerHTML = data[i];
+				building.appendChild(option);
+			}}
+
+		}
+
+		function switchTypeFields(value)
+		{
+			var
+				typeField1 = document.getElementById('typeField1'),
+				typeField2 = document.getElementById('typeField2'),
+				typeField3 = document.getElementById('typeField3');
+
+			switch (value) {
+
+				case 'adhoc':
+					typeField1.style.display = '';
+					typeField2.style.display = 'none';
+					typeField3.style.display = 'none';
+					break;
+
+				case 'semester1':
+					typeField1.style.display = 'none';
+					typeField2.style.display = '';
+					typeField3.style.display = '';
+					break;
+
+				default:
+					typeField1.style.display = 'none';
+					typeField2.style.display = 'none';
+					typeField3.style.display = 'none';
+					break;
+
+			}
+		}
+
+	</script>
+
+
+
+<style type="text/css">
+
+.main {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 755px;
+	text-align: left;
+	box-shadow: 0 0 10px #555;
+	border-radius:10px;
+	border: 1px black solid;
+
+}
+.sub {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: white;
+}
+.title {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: normal;
+	font-size: 40pt;
+	text-align: center;
+	margin-top: 10px;
+}
+#header ul li {
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+#header ul {
+	height: 35px;
+	border-top: 1px black solid;
+	border-bottom: 1px black solid;
+	list-style: none;
+	padding:0;
+	margin:0;
+	background-color: gray;
+}
+#header li {
+	float: left;
+	width: 140px;
+	display: block;
+	height: 35px;
+	text-align: center;
+	margin: 0 0 0 0;
+	background-color: gray;
+	line-height: 35px;
+	text-decoration:none;
+}
+#header li a{
+	 padding: 10px 12px;
+
+}
+#header ul li:hover {
+	background-color: #cc0066;
+}
+.formfont{
+	font-size:25px;
+}
+#txtarea {
+	vertical-align:middle;
+	text-align: left;
+}​
+.topnav {
+	padding: 4px 12px;
+}
+</style>
+</head>
+
+<body style="background-color:#624581; text-align: center; margin: 0px; padding: 0px;">
+<div style="background-color:#E9E9E9; width: 1000px; height: 1150px;" class="main">
+	<h1 class="title" style="height: 65px; line-height: 100px">Timetable Form</h1>
+	<a href="http://www.lboro.ac.uk/" style="float: left; margin-top: -75px; margin-left: 20px">
+	<img src="http://www.lboro.ac.uk/media/wwwlboroacuk/styleassets/img/lulogo.gif" alt="Loughborough University" width="204" height="52">
+	</a>
+	<div id="header"  class="topnav">
+		<ul>
+			<li><a style="text-decoration: none; color: black" href="Timetable%20Scheduler.html">Home</a></li>
+			<li><a style="text-decoration: none; color: black" href="Rooms.html">Rooms</a></li>
+			<li><a style="text-decoration: none; color: black" href="Submissions.html">Submissions</a></li>
+		</ul>
+	</div>
+	<div>
+	<span style="float: right; border-top:2px; margin-right: 4px;">You are logged in as Ray Dawson (<a href="Login.html" style="color: blue;">Log out</a>)</span>
+	</div>
+	<div style="width: 705px; height: 950px; border: 1px black solid; position: relative;" class="sub">
+		<form style="text-align: center; margin: 0 auto;" class="formfont" id="myForm" action="Rooms.html" method="post"> <!-- onsubmit="return validateForm(this);" --> <br/>
+
+			*Choose your booking type:  <select id="typeField" name="type" onchange="switchTypeFields(this.value);" required>
+											<option value="">Please select</option>
+											<option value="semester1">Semester 1 Booking</option>
+											<option value="adhoc">Ad-Hoc Request</option>
+										</select> <br/><hr/>
+
+								<div id="typeField1">
+			*Date: 					<input type="text" id="datepicker" name="date"/> <br/> <br/> <!-- <input type="date" name="date"/> <br/> <br/> -->
+								</div>
+								<div id="typeField2">
+			*Day:                   <select name="day">
+										<option value="">Please Select</option>
+										<option value="monday">Monday</option>
+										<option value="tuesday">Tuesday</option>
+										<option value="wednesday">Wednesday</option>
+										<option value="thursday">Thursday</option>
+										<option value="friday">Friday</option>
+									</select> <br/> <br/>
+								</div>
+								<div id="typeField3">
+              <!-- Week-->			<label for="amount">*Start & End Week: </label>
+									<input type="text" name="amount" id="amount" readonly style="border:0; font-size:20px; width:70px;" class="formfont"/>
+									<br/><br/>
+                                    <div id="slider-range" style="text-align:center; margin:0 auto; width:200px;"></div>
+                                    <br/>
+								</div>
+
+
+              <!-- Time-->			<label for="time">*Start Time & End Time:</label> <input name="time" id="time" readonly style="border:0; font-size:20px; width:120px;" class="formfont" style="font-size: 20px;" value="9AM - 6PM" />
+								    <br/><br/>
+								    <div id="time-range" style="text-align:center; margin:0 auto; width: 200px;">
+								        <script type="text/javascript">
+								            $("#time-range").slider({
+								            range: true,
+								            min: 540,
+								            max: 1085.4,
+								            values: [540, 600],
+								            slide: slideTime
+								            });
+								
+								            function slideTime(event, ui){
+								            var val0 = $("#time-range").slider("values", 0),
+								            val1 = $("#time-range").slider("values", 1),
+								            minutes0 = parseInt(val0 % 60, 10),
+								            hours0 = parseInt(val0 / 60 % 24, 10),
+								            minutes1 = parseInt(val1 % 60, 10),
+								            hours1 = parseInt(val1 / 60 % 24, 10);
+								            startTime = getTime(hours0, minutes0);
+								            endTime = getTime(hours1, minutes1);
+								
+											//adding this piece to restrict same time
+											if (startTime == endTime) {
+												return;
+											}
+								
+								            $("#time").val(startTime + ' - ' + endTime);
+								            }
+								
+								            function getTime(hours, minutes) {
+								            var time = null;
+								            minutes = minutes + "";
+								            if (hours < 12) {
+								            time = "AM";
+								            }
+								            else {
+								            time = "PM";
+								            }
+								            if (hours == 0) {
+								            hours = 12;
+								            }
+								            if (hours > 12) {
+								            hours = hours - 12;
+								            }
+								            if (minutes.length == 1) {
+								            minutes = "0" + minutes;
+								            }
+								            return hours +  time;
+								            }
+								            slideTime();
+								         </script>
+								      </div>
+								      <br/>
+								
+			*Group Size: 			<input type="number" name="grpsize" maxlength="3" id="input1" placeholder="Max: 400" min="1" max="400" style="width: 75px" onKeyPress="return numbersonly(this, event)" required/>
+                                    <!-- onchange="Javascript:testInputData('input1',numbersOnly)" --> <br/> <br/>
+
+			*Module Code:			<input type="text" name="modcode" placeholder="Example: COA123" maxlength="6" style="text-transform:uppercase" id="modcode" required/> <br/> <br/>
+
+			*Area: 					<select name="area" onchange="switchBuildings(this);" required>
+										<option value="">Please select</option>
+										<option value="central">Central Park</option>
+										<option value="east">East Park</option>
+										<option value="west">West Park</option>
+									</select> <br/> <br/>
+
+			Building: 				<select name="building">
+										<option value="any"></option>
+<!--										<option value="ehb">Edward Herbert</option> -->
+<!--										<option value="jfr">James France</option> -->
+<!--										<option value="lds">Design School</option> -->
+<!--										<option value="sms">Stewart Mason</option> -->
+									</select> <br/> <br/>
+			No. of Rooms:           <select name="rooms">
+										<option value="1room">1</option>
+										<option value="2rooms">2</option>
+										<option value="3rooms">3</option>
+										<option value="4rooms">4</option>
+									</select> <br/> <br/>
+									
+			<table style=" border-top: thin black solid; border-bottom: thin black solid; text-align: center; font-size:20px; width: 705px">
+			<tr style="border: thin black solid;">
+				<td colspan="3" style="border-bottom: thin black solid;">High Priority:			<input type="checkbox" name="priority"/></td></tr>
+			<tr style="border: thin black solid;">
+				<td style="width:235px;">Computer: <input type="checkbox" name="computer"/></td>
+
+				<td style="border-left: thin black solid; border-right: thin black solid; width:235px;">Disability Access: <input type="checkbox" name="disability"/></td>
+
+	            <td style="width:235px;">Projector: <input type="checkbox" name="projector"/></td>
+	        </tr>
+	        <tr>
+	        	<td style="width:235px;">DVD Player: <input type="checkbox" name="dvd"/></td>
+	        	<td style="border-left: thin black solid; border-right: thin black solid; width:235px;">Visualiser: <input type="checkbox" name="visualiser"/></td>
+	        	<td style="width:235px;">Radio Microphone: <input type="checkbox" name="microphone"/></td>
+			</tr>
+			<tr>
+				<td style="width:235px;">Whiteboard: <input type="checkbox" name="whiteboard"/></td>
+				<td style="border-left: thin black solid; border-right: thin black solid; width:235px;">PA System: <input type="checkbox" name="PASystem"/></td>
+				<td style="width:235px;">ReVIEW: <input type="checkbox" name="review"/></td>
+			</tr>
+			</table> <br/>
+			Special Requirements:  <textarea cols="25" id="txtarea" name="txtarea" rows="3"></textarea> <br/><br/>
+								   <input type="submit" value="Submit" style="width: 100px; height: 50px;"></input>
+								   <input type="button" onclick="reset()" style="width: 100px; height: 50px;" value="Reset Form"/>
+		</form>
+
+		<div>
+			<span style="bottom: 0; left: 0; position: absolute; font-size: 15px;">* Marks required fields</span>
+			<span style="bottom: 0; right: 0; position: absolute; font-size: 15px;">Round 1 Deadline: <span style="color:#FF0000;">10/09/2014</span></span>
+		</div>
+		<script>
+			function reset() {
+			    document.getElementById("myForm").reset();
+			}
+			document.getElementById('typeField').onchange();
+		</script>
+	</div>
+
+	<div style="text-align: center; color: black; margin-top:-10px;">
+	&copy;Copyright<span lang="en-gb"> 2014</span> &brvbar; Group 14
+	</div>
+
+</div>
+</body>
+</html>

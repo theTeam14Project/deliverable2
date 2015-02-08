@@ -1,0 +1,474 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Rooms</title>
+<style type="text/css">
+
+.main {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 755px;
+	text-align: left;
+	box-shadow: 0 0 10px #555;
+	border-radius:10px;
+	border: 1px black solid;
+
+}
+.sub {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: white;
+}
+.title {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: normal;
+	font-size: 40pt;
+	text-align: center;
+	margin-top: 10px;
+}
+#header ul li {
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+#header ul {
+	height: 35px;
+	border-top: 1px black solid;
+	border-bottom: 1px black solid;
+	list-style: none;
+	padding:0;
+	margin:0;
+	background-color: gray;
+}
+#header li {
+	float: left;
+	width: 140px;
+	display: block;
+	height: 35px;
+	text-align: center;
+	margin: 0 0 0 0;
+	background-color: gray;
+	line-height: 35px;
+	text-decoration:none;
+}
+#header li a{
+	 padding: 10px 12px;
+
+}
+#header ul li:hover {
+	background-color: #cc0066;
+}
+.formfont{
+	font-size:25px;
+}
+#txtarea {
+	vertical-align:middle;
+	text-align: left;
+}​
+.topnav {
+	padding: 4px 12px;
+}
+.normal {
+	width:700px;
+}
+.normal ul li {
+	border-radius: 5px;
+	cursor: pointer;
+	display: block;
+	margin: 2px;
+	padding: 10px 0 2px 2px;
+	position: relative;
+	transition: all 0.5s;
+	border: 1px solid #222;
+	width: 80px;
+	height: 25px;
+	text-align: center;
+	left: -15px;
+	margin-top: 5px;
+}
+
+.normal ul li:hover {
+	background-color: gray;
+}
+#criteria {
+	border-spacing: 2px;
+	border-color:black;
+	text-align: center;
+	display: table;
+	border: 1px solid black;
+	border-collapse:collapse;
+}
+#criteria tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+#criteria tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+#criteria th {
+	border: 1px solid black;
+	padding: 2px;
+}
+#criteria td {
+	border: 1px solid black;
+	padding: 2px;
+	display: table-cell;
+	vertical-align: inherit;
+}
+
+.hover_img a {
+	position:relative;
+}
+.hover_img a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: 65px;
+	bottom: 135px;
+
+}
+.hover_img a:hover span {
+	display:block;
+}
+
+.hover_img1 a {
+	position:relative;
+}
+.hover_img1 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -65px;
+	bottom: 90px;
+
+}
+.hover_img1 a:hover span {
+	display:block;
+}
+.hover_img2 a {
+	position:relative;
+}
+.hover_img2 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -70px;
+	bottom: 132px;
+
+}
+.hover_img2 a:hover span {
+	display:block;
+}
+.hover_img3 a {
+	position:relative;
+}
+.hover_img3 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -210px;
+	bottom: 90px;
+
+}
+.hover_img3 a:hover span {
+	display:block;
+}
+.hover_img4 a {
+	position:relative;
+}
+.hover_img4 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -210px;
+	bottom: 132px;
+
+}
+.hover_img4 a:hover span {
+	display:block;
+}
+.hover_img5 a {
+	position:relative;
+}
+.hover_img5 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -355px;
+	bottom: 90px;
+
+}
+.hover_img5 a:hover span {
+	display:block;
+}
+.hover_img6 a {
+	position:relative;
+}
+.hover_img6 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -345px;
+	bottom: 135px;
+
+}
+.hover_img6 a:hover span {
+	display:block;
+}
+.hover_img7 a {
+	position:relative;
+}
+.hover_img7 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -490px;
+	bottom: 90px;
+
+}
+.hover_img7 a:hover span {
+	display:block;
+}
+.hover_img8 a {
+	position:relative;
+}
+.hover_img8 a span {
+	border: 1px solid black;
+	box-shadow: 0 0 10px #555;
+	border-radius:7px;
+	#000;
+	position:absolute;
+	display:none;
+	visibility: visible;
+	left: -490px;
+	bottom: 133px;
+
+}
+.hover_img8 a:hover span {
+	display:block;
+}
+
+
+
+a:link {
+	color: #000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: none;
+	color: #000;
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+.itemSelected {
+	background-color: #cc0066;
+}
+</style>
+
+<script type="text/javascript">
+
+	var
+		selectRoom = (function()
+		{
+			var prv, cls;
+			return function(e)
+			{
+				if (e !== prv) {
+					if (prv) {prv.className = cls;}
+					cls = e.className;
+					prv = e;
+					prv.className = cls + ' ' + 'itemSelected';
+				}
+			};
+		}());
+
+</script>
+
+</head>
+
+<body style="background-color:#624581; text-align: center; margin: 0px; padding: 0px;">
+<div style="background-color:#E9E9E9; width: 1000px; height:800px;" class="main">
+	<h1 class="title" style="height: 65px; line-height: 100px; text-align: center; margin-left: 15px;" >Rooms</h1>
+	<a href="http://www.lboro.ac.uk/" style="float: left; margin-top: -75px; margin-left: 20px">
+	<img src="http://www.lboro.ac.uk/media/wwwlboroacuk/styleassets/img/lulogo.gif" alt="Loughborough University" width="204" height="52">
+	</a>
+	<div id="header"  class="topnav">
+		<ul>
+			<li><a style="text-decoration: none; color: black" href="Timetable%20Scheduler.html">Home</a></li>
+			<li><a style="text-decoration: none; color: black" href="Rooms.html">Rooms</a></li>
+			<li><a style="text-decoration: none; color: black" href="Submissions.html">Submissions</a></li>
+		</ul>
+	</div>
+	<div>
+	<span style="float: right; border-top:2px; margin-right: 4px;">You are logged in as Ray Dawson (<a href="Login.html" style="text-decoration: underline;color: blue;">Log out</a>)</span>
+	</div>
+	<div style="width: 700px; height: 600px; border: 1px black solid; position: relative;" class="sub">
+		<form action="Submissions.html" method="post">
+		<br/>
+		<span style="text-align: left; font-size: 25px; margin-left: 4px;">Criteria</span>
+		<hr/>
+			<table align="center" id="criteria">
+				<tbody>
+					<tr>
+						<th>Booking Type</th>
+						<td>Semester 1</td>
+						<th>Computer</th>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<th>Day</th>
+						<td>Tuesday</td>
+						<th>DVD Player</th>
+						<td>-</td>
+					</tr>
+					<tr>
+						<th>Week</th>
+						<td>1 - 15</td>
+						<th>Whiteboard</th>
+						<td>-</td>
+					</tr>
+					<tr>
+						<th>Time</th>
+						<td>12PM - 2PM</td>
+						<th>Disability Access</th>
+						<td>-</td>
+					</tr>
+					<tr>
+						<th>Group Size</th>
+						<td>92</td>
+						<th>Visualiser</th>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<th>Module Code</th>
+						<td >COC120</td>
+						<th>PA System</th>
+						<td>-</td>
+					</tr>
+					<tr>
+						<th>Area</th>
+						<td>Central Park</td>
+						<th>Projector</th>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<th>Building</th>
+						<td>Any</td>
+						<th>Radio Microphone</th>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<th>No. of Rooms</th>
+						<td>1</td>
+						<th>ReVIEW</th>
+						<td>-</td>
+
+					</tr>
+					<tr>
+						<th>High Priority</th>
+						<td>Yes</td>
+					</tr>
+				</tbody>
+			</table>
+		<br/><br/>
+		<span style="text-align: left; font-size: 25px; margin-left: 4px;">Pick your preferred room(s)</span>
+		<hr/>
+
+		<div style="width:100%">
+		<table style="text-align: center; width: 100%; border-bottom-color: gray; border-spacing: 2px; display: table; border-collapse: collapse" class="normal">
+			<tr>
+				<td>
+					<ul>
+						<li onclick="selectRoom(this);" class="">Any</li>
+						<li onclick="selectRoom(this);" class="hover_img"> <a href="#">J104<span><img src="J104.jpg" alt="J104"  /></span> </li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li onclick="selectRoom(this);" class="hover_img1"> <a href="#">CC011<span><img src="CC011.jpg" alt="CC011"  /></span> </li>
+						<li onclick="selectRoom(this);" class="hover_img2"> <a href="#">U020<span><img src="U020.jpg" alt="U020"  /></span> </li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li onclick="selectRoom(this);" class="hover_img3"> <a href="#">CC012<span><img src="CC012.jpg" alt="CC012"  /></span> </li>
+						<li onclick="selectRoom(this);" class="hover_img4"> <a href="#">CC013<span><img src="CC013.jpg" alt="CC013"  /></span> </li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li onclick="selectRoom(this);" class="hover_img5"> <a href="#">J001<span><img src="J001.jpg" alt="J001"  /></span> </li>
+						<li onclick="selectRoom(this);" class="hover_img6"> <a href="#">GGB01<span><img src="GGB01.jpg" alt="GGB01"  /></span> </li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li onclick="selectRoom(this);" class="hover_img7"> <a href="#">J002<span><img src="J002.jpg" alt="J002"  /></span> </li>
+						<li onclick="selectRoom(this);" class="hover_img8"> <a href="#">A001<span><img src="A001.jpg" alt="image"  /></span> </li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		</div>
+		<br/><br/>
+		<div style="text-align: center">
+			<input type="submit" value="Submit" name="submit" style="text-align: center; height: 40px; width: 80px; display: inline-block;"/>
+		</div>
+		</form>
+	</div>
+
+	<div style="text-align: center; color: black; margin-top:-10px;">
+	&copy;Copyright<span lang="en-gb"> 2014</span> &brvbar; Group 14
+	</div>
+
+</div>
+</body>
+
+</html>
